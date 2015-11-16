@@ -3,31 +3,50 @@ using System.Collections;
 
 public class TurnEndButton : MonoBehaviour {
     public Material[] TurnMat;
-    private int turn;
+    public bool myturn = true;
+    public int turn;
 
     public Material[] ManaStatus;
 
-    void Start()
+    void start()
     {
         turn = 2;
     }
 
     private void OnMouseEnter()
     {
-        this.GetComponent<Renderer>().material = TurnMat[1];
+        if(myturn)
+            this.GetComponent<Renderer>().material = TurnMat[1];
     }
     private void OnMouseExit()
     {
         this.GetComponent<Renderer>().material = TurnMat[0];
     }
-    
+
     private void OnMouseDown()
     {
-        this.GetComponent<Renderer>().material = TurnMat[2];
-        // socket send message
-        GameObject mana = GameObject.Find("Manacost" + turn.ToString());
-        mana.GetComponent<Renderer>().material = ManaStatus[1];
-        if(turn != 10)
+        if (myturn)
+        {
+            this.GetComponent<Renderer>().material = TurnMat[2];
+            myturn = false;
+            gameObject.GetComponent<NetworkView>().RPC("addMana", RPCMode.Others, turn);
             turn++;
+            // socket send message
+        }
+    }
+
+    [RPC]
+    void addMana(int mana)
+    {
+        for (int i = 1; i <= mana; i++)
+        {
+            myturn = true;
+            GameObject Mana = GameObject.Find("manacost" + i.ToString());
+            Mana.GetComponent<Renderer>().material = ManaStatus[1];
+        }
+    }
+    void set_turn(bool a)
+    {
+        myturn = a;
     }
 }

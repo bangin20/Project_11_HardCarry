@@ -46,8 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\ChooseHero.cs" />
+     <Compile Include="Assets\Script\GUISetting.cs" />
      <Compile Include="Assets\Script\HeroAbility.cs" />
      <Compile Include="Assets\Script\ManaCost.cs" />
+     <Compile Include="Assets\Script\NetworkSetting.cs" />
+     <Compile Include="Assets\Script\OPManacontrol.cs" />
      <Compile Include="Assets\Script\TurnEndButton.cs" />
      <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
      <None Include="Assets\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
